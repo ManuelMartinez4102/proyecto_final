@@ -1,0 +1,7 @@
+/* styles.css */
+body {
+    background-image: url('../images/portada.svg'); /* Cambia esto al nombre de tu imagen */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* No repite la imagen */
+}

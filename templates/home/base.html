@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es" class="h-100">
+
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.104.2">
+  <title>ARAGB</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/cover/">
+  <link href="{% static 'core/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'core/css/cover.css' %}" rel="stylesheet">
+  <link href="{% static 'core/css/custom.css' %}" rel="stylesheet"> <!-- Asegúrate de que tu CSS está aquí -->
+</head>
+
+<body class="d-flex h-100 text-center custom-background"> <!-- Clase para aplicar el fondo -->
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0">ARAGB</h3>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  {% if request.user.is_authenticated %}
+    <a class="btn btn-outline-light" href={% url 'exit' %}>Cerrar Sesión</a>
+  {% endif %}
+
+  <footer class="mt-auto text-white-50">
+    <p>Hecho por estudiantes de la  <a href="https://www.unicaribe.mx/" class="text-white">universidad del caribe</a> y por acesor <a href="idominguez@ucaribe.edu.mx " class="text-white">Ismael Domínguz</a>.</p>
+  </footer>
+</div>
+</body>
+</html>

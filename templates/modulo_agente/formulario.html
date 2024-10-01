@@ -1,0 +1,111 @@
+{% extends 'modulo_agente/base.html' %}
+
+{% block title %}Formulario{% endblock %}
+
+{% block content %}
+<div class="form-wrapper"> <!-- Contenedor principal para centrar el formulario -->
+    <div class="form-container">
+        <h2 style="text-align: center;">Datos de venta</h2>
+
+        <!-- Formulario de Venta -->
+        <form id="venta-form">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <select id="nombre" class="form-control">
+                    <option>Selecciona el nombre</option>
+                    <!-- Opciones de nombres desde la base de datos -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_colaborador">ID Colaborador</label>
+                <select id="id_colaborador" class="form-control">
+                    <option>Selecciona el ID</option>
+                    <!-- Opciones de IDs desde la base de datos -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" class="form-control">
+            </div>
+            <div class="form-group d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <label for="producto">Producto</label>
+                    <select id="producto" class="form-control">
+                        <option>Selecciona el producto</option>
+                        <!-- Opciones de productos desde la base de datos -->
+                    </select>
+                </div>
+                <button type="button" id="add-product" class="btn btn-outline-success ml-2" title="Agregar Producto">
+                    <i class="fas fa-plus-circle"></i> <!-- Ícono de agregar -->
+                </button>
+            </div>
+            <div class="form-group">
+                <label for="total">Total</label>
+                <input type="number" id="total" class="form-control" placeholder="Monto total">
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </form>
+
+        <!-- Contenedor para la lista de productos añadidos -->
+        <div id="product-list" class="mt-4">
+            <h5>Productos Vendidos:</h5>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table">
+                    <!-- Aquí se mostrarán los productos añadidos como filas -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+// Variables para almacenamiento de productos
+let productosVendidos = [];
+
+// Manejar el botón de agregar productos
+document.getElementById('add-product').addEventListener('click', function() {
+    const producto = document.getElementById('producto').value;
+    const precio = document.getElementById('total').value;
+
+    // Verificar si los campos están llenos antes de agregar
+    if (producto && precio) {
+        productosVendidos.push({ producto, precio });
+        actualizarTablaProductos();
+    } else {
+        alert("Por favor, ingrese el producto y el precio.");
+    }
+});
+
+// Función para actualizar la lista de productos visualmente
+function actualizarTablaProductos() {
+    const productTable = document.getElementById('product-table');
+    productTable.innerHTML = ''; // Limpiar la lista actual
+
+    productosVendidos.forEach((item, index) => {
+        const productRow = `
+            <tr>
+                <td>${item.producto}</td>
+                <td>$${item.precio}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${index})">Eliminar</button>
+                </td>
+            </tr>
+        `;
+        productTable.innerHTML += productRow; // Agregar la nueva fila
+    });
+}
+
+// Función para eliminar un producto de la lista
+function eliminarProducto(index) {
+    productosVendidos.splice(index, 1); // Eliminar el producto del array
+    actualizarTablaProductos(); // Actualizar la lista en el frontend
+}
+</script>
+{% endblock %}

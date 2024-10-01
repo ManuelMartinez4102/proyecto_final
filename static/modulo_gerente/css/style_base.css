@@ -1,0 +1,171 @@
+/* General */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Barra superior */
+#top-bar {
+    height: 80px;
+    background-color: #90C06B !important;
+    padding: 0 2%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra en la parte inferior */
+}
+
+#top-bar h1 {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+    font-size: 2rem;
+}
+
+#top-bar .user-info h5,
+#top-bar .user-info p {
+    margin: 0;
+    color: #fff;
+    text-align: left;
+}
+
+/* Logo */
+#logo-img {
+    height: 5vh;
+    width: auto;
+}
+
+/* Barra lateral */
+#sidebar {
+    background-color: #5A7546 !important;
+    width: 20vw;
+    height: 100vh;
+}
+
+#sidebar .nav-link:hover {
+    border-color: #fff;
+    background-color: #7EA462;
+}
+
+/* Ajustes para la cabecera de la barra lateral (usuario) */
+.sidebar-header {
+    padding-top: 40px;
+    padding-bottom: 30px;
+}
+
+.sidebar-header .user-info h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sidebar-header .user-info p {
+    margin: 0;
+    font-size: 14px;
+    font-style: italic;
+    color: #f0f0f0;
+}
+
+/* Estilo del nombre y rol del usuario */
+.user-name {
+    margin: 0;
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.user-role {
+    margin: 0;
+    font-size: 14px;
+    font-style: italic;
+    color: #dddddd;
+}
+
+/* Contenido principal
+#main-content {
+    margin-left: 20vw;
+    margin-top: 10vh;
+    padding: 20px;
+    height: calc(100vh - 10vh);
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    flex-direction: column;
+    text-align: left;
+}*/
+
+#main-content {
+    margin-left: 250px;
+    margin-top: 80px;
+    padding: 0px 20px;
+    height: calc(100vh - 80px);
+    display: block;
+    overflow-y: auto;  /* Permitir desplazamiento vertical en el contenido */
+    overflow-x: hidden;
+    position: relative;  /* Ajustar la posición */
+}
+
+/* Selector de fechas */
+#dateRange {
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+/* KPI cards */
+.kpi-card {
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de gráficos */
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Contenedor del logo centrado */
+.logo-container {
+    flex-grow: 1; /* Ocupa el espacio central */
+    text-align: center; /* Centra el contenido dentro del contenedor */
+}
+#rolesChart {
+    max-height: 200px;
+    max-width: 100%;
+}
+
+/* Botón "Back Home" */
+.btn-light {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    color: #333;
+    font-weight: bold;
+}
+
+.btn-light:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 100vw;
+        height: auto;
+        position: relative;
+    }
+
+    #main-content {
+        margin-left: 0;
+        margin-top: 5vh;
+        padding: 10px;
+    }
+
+    .kpi-card {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

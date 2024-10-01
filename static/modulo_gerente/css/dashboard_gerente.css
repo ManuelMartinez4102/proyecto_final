@@ -1,0 +1,279 @@
+/************* KPIS ***********/
+
+/* Contenedor del KPI */
+.kpi-card {
+    width: 170px;
+    margin: 0; /* Eliminar márgenes externos */
+    height: 60px;
+    padding: 5px;  /* Espaciado interno */
+    background-color: #fff; /* Color de fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;  /* Alinear el contenido al centro */
+    border: 1px solid #e6e6e6; /* Borde gris claro */
+}
+
+/* Título del KPI */
+.kpi-card h5 {
+    font-size: 12px; /* Tamaño del texto */
+    margin-bottom: 10px; /* Espacio debajo del título */
+    color: #333; /* Color del texto */
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Valor del KPI */
+.kpi-card h2 {
+    font-size: 20px; /* Tamaño de la fuente para el valor */
+    margin: 5px 0; /* Espaciado superior e inferior */
+    color: #5a7546; /* Color del valor principal */
+    font-weight: bold; /* Negrita */
+}
+
+/* Subtítulo del KPI */
+.kpi-card p {
+    font-size: 12px; /* Tamaño de la fuente para el subtítulo */
+    color: #6c757d; /* Color gris */
+    margin-top: 5px; /* Espacio superior */
+}
+
+/* Contenedor de los KPIs usando Flexbox */
+.kpi-row {
+    margin-left: 10px;
+    display: flex;              /* Usar flexbox para alinear en fila */
+    justify-content: space-between; /* Distribuir uniformemente los elementos */
+    align-items: flex-start;    /* Alinear verticalmente */
+    flex-wrap: nowrap;          /* Evitar que se muevan a una nueva fila */
+    gap: 20px;                  /* Espacio entre tarjetas */
+}
+
+
+/* Contenedor específico del KPI Gauge */
+#gaugeChart-container {
+    width: 170px;  /* Ancho específico */
+    height: 60px;  /* Altura específica */
+    padding: 5px;  /* Espaciado interno */
+    background-color: #fff;  /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra suave */
+    border-radius: 12px;  /* Bordes redondeados */
+    border: 1px solid #e6e6e6;  /* Borde gris claro */
+    text-align: left;  /* Alinear el texto a la izquierda */
+    display: flex;  /* Usar flexbox para organizar */
+    flex-direction: column;  /* Colocar elementos en columna */
+    justify-content: space-between;  /* Distribuir los elementos verticalmente */
+}
+
+/* Estilo del título dentro de #gaugeChart-container */
+#gaugeChart-container h5 {
+    font-size: 12px;  /* Ajustar el tamaño del texto */
+    margin-bottom: 5px;  /* Espacio debajo del título */
+    color: #333;  /* Color del texto */
+    font-weight: bold;  /* Texto en negrita */
+    text-align: left;  /* Alinear el texto a la izquierda */
+}
+
+/* Estilo del valor del KPI dentro de #gaugeChart-container */
+#gaugeChart-container h2 {
+    font-size: 18px;  /* Tamaño de la fuente para el valor */
+    margin: 5px 0;  /* Espaciado superior e inferior */
+    color: #5a7546;  /* Color del valor principal */
+    font-weight: bold;  /* Negrita */
+    text-align: left;  /* Alinear el texto a la izquierda */
+}
+/* Subtítulo del KPI */
+#gaugeChart-container p {
+    font-size: 12px; /* Tamaño de la fuente para el subtítulo */
+    color: #6c757d; /* Color gris */
+    margin-top: 5px; /* Espacio superior */
+}
+
+/* Ajustar el tamaño del canvas */
+#gaugeChart {
+    width: 120px;  /* Ajuste manual del ancho del gráfico */
+    height: 60px;  /* Ajuste manual de la altura */
+    margin: 0 auto;  /* Centrar la gráfica */
+}
+
+/************* FILA 2*********/
+
+/************* GRAFICO DE BARRAS*********/
+
+.barChart-row {
+    width: 170px;
+    margin: 0; /* Eliminar márgenes externos */
+    height: 60px;
+    padding: 5px;  /* Espaciado interno */
+    background-color: #fff; /* Color de fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;  /* Alinear el contenido al centro */
+    border: 1px solid #e6e6e6; /* Borde gris claro */
+}
+
+/* Estilo para el contenedor del gráfico de barras */
+#barChart-container {
+    float: left;
+    width: 100%;  /* Ancho completo del contenedor */
+    max-width: 600px;  /* Limitar el tamaño máximo */
+    margin: 00px auto;  /* Centrar el contenedor */
+    height: auto;  /* Dejar que la altura se adapte */
+    padding: 20px;  /* Espaciado interno */
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;  /* Alinear el contenido al centro */
+    border: 1px solid #e6e6e6; /* Borde gris claro */
+}
+
+/* Color personalizado para las barras */
+.bar-custom {
+    background-color: #5A7546 !important;  /* Color personalizado */
+    border-color: #5A7546 !important;  /* Borde del mismo color */
+}
+
+/* Ocultar la leyenda de la gráfica */
+.chart-legend {
+    display: none !important;  /* Ocultar leyenda */
+}
+
+.col-md-6, .col-sm-6 {
+    margin-left: 1 !important;  /* Remover márgenes Bootstrap */
+    padding-left: 1 !important;  /* Eliminar padding */
+}
+
+/************** LINEAS *******************/
+
+/* Contenedor del KPI */
+#lineChart-container {
+    float: left;
+    width: 100%;  /* Ancho completo del contenedor */
+    max-width: 600px;  /* Limitar el tamaño máximo */
+    margin: 00px auto;  /* Centrar el contenedor */
+    height: auto;  /* Dejar que la altura se adapte */
+    padding: 20px;  /* Espaciado interno */
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;  /* Alinear el contenido al centro */
+    border: 1px solid #e6e6e6; /* Borde gris claro */
+}
+
+
+/************ TERCERA FILA *************/
+
+
+/* Estilo general para la fila */
+.row.mt-4  {
+    margin-left: 0;
+    padding: 0;
+    display: flex;              /* Usar flexbox para alinear en fila */
+    justify-content: space-between; /* Distribuir uniformemente los elementos */
+    align-items: flex-start;    /* Alinear verticalmente */
+    flex-wrap: nowrap;          /* Evitar que se muevan a una nueva fila */
+    gap: 0px;                  /* Espacio entre tarjetas */
+}
+
+
+
+/* Gráfico de Barras Horizontales */
+
+
+#rectChart-container {
+    float: left;
+    width: 100%;  /* Ancho completo del contenedor */
+    max-width: 600px;  /* Limitar el tamaño máximo */
+    margin: 00px auto;  /* Centrar el contenedor */
+    height: auto;  /* Dejar que la altura se adapte */
+    padding: 20px;  /* Espaciado interno */
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;  /* Alinear el contenido al centro */
+    border: 1px solid #e6e6e6; /* Borde gris claro */
+}
+
+/* Canvas del gráfico de Barras */
+#rectChart {
+    width: 250px !important; /* Ajustar el ancho del canvas */
+    height: 200px !important; /* Ajustar la altura del canvas */
+}
+
+
+
+
+
+/* Gráfico de Pastel */
+#pieChart-container {
+    float: left;
+    width: 100%;  /* Ancho completo del contenedor */
+    max-width: 600px;  /* Limitar el tamaño máximo */
+    margin: 00px auto;  /* Centrar el contenedor */
+    height: auto;  /* Dejar que la altura se adapte */
+    padding: 20px;  /* Espaciado interno */
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 12px; /* Bordes redondeados */
+    text-align: center;  /* Alinear el contenido al centro */
+    border: 1px solid #e6e6e6; /* Borde gris claro */
+}
+
+/* Canvas del gráfico de Pastel */
+#pieChart {
+    width: 150px !important;
+    height: 100x !important;
+}
+
+
+/********** TABLA*********/
+
+
+
+/* Contenedor de la Tabla */
+.card {
+    width: 250px; /* Ajustar el ancho */
+    height: 200px; /* Ajustar la altura */
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    border: 1px solid #e6e6e6;
+    overflow-y: auto; /* Permitir scroll si el contenido es largo */
+}
+
+/* Ajuste de la tabla */
+.table {
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+/* Fila de la tabla */
+.table tbody tr {
+    height: 30px; /* Ajuste de altura de cada fila */
+}
+
+/************ RESPONSIVIDAD *************/
+
+/* Ajustes para pantallas medianas */
+@media (max-width: 768px) {
+    #rectChart-container, #pieChart-container, .card {
+        width: 100%;
+        height: auto;
+    }
+
+    canvas {
+        height: 200px !important;
+    }
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 480px) {
+    #rectChart-container, #pieChart-container, .card {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    canvas {
+        height: 150px !important;
+    }
+}

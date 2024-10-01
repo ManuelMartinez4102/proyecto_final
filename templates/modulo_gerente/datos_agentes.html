@@ -1,0 +1,67 @@
+{% extends 'modulo_gerente/base.html' %}
+
+{% block title %}Datos de los Agentes{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Título de la Sección -->
+    <div class="text-center">
+        <h1>Agentes</h1>
+    </div>
+
+    <!-- Tabla con la lista de Agentes -->
+    <div class="d-flex justify-content-center mt-4">
+        <div class="bg-light rounded shadow-sm p-4" style="width: 800px;">
+            <table class="table table-bordered text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Clave</th>
+                        <th>Usuario</th>
+                        <th>Tiempo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Carlos Pérez</td>
+                        <td>CP001</td>
+                        <td>carlos.perez</td>
+                        <td>5 años</td>
+                    </tr>
+                    <tr>
+                        <td>Ana López</td>
+                        <td>AL002</td>
+                        <td>ana.lopez</td>
+                        <td>3 años</td>
+                    </tr>
+                    <tr>
+                        <td>Luis Hernández</td>
+                        <td>LH003</td>
+                        <td>luis.hernandez</td>
+                        <td>2 años</td>
+                    </tr>
+                    <tr>
+                        <td>Marta García</td>
+                        <td>MG004</td>
+                        <td>marta.garcia</td>
+                        <td>4 años</td>
+                    </tr>
+                    <tr>
+                        <td>Juan Pérez</td>
+                        <td>JP005</td>
+                        <td>juan.perez</td>
+                        <td>1 año</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Botones de Agregar y Eliminar -->
+    <div class="text-center mt-4">
+        <button class="btn btn-success mx-2" style="width: 120px;">Agregar</button>
+        <button class="btn btn-danger mx-2" style="width: 120px;">Eliminar</button>
+    </div>
+</div>
+{% endblock %}

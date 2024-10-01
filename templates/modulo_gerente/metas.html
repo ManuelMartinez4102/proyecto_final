@@ -1,0 +1,55 @@
+{% extends 'modulo_gerente/base.html' %}
+
+{% block title %}Gestión de Metas{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="header text-center bg-white text-dark p-3 rounded shadow-sm">
+        <h1>Gestión de Metas</h1>
+    </div>
+
+    <div class="row mt-4">
+
+        <div class="col-md-8">
+
+            <div class="form-container p-4 bg-light rounded shadow-sm">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Fecha</label>
+                        <input type="text" class="form-control" id="fecha" name="fecha" value="01/09/2024 - 30/09/2024">
+                    </div>
+                    <div class="mb-3">
+                        <label for="monto" class="form-label">Monto</label>
+                        <input type="number" class="form-control" id="monto" name="monto" placeholder="Monto en pesos">
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar Meta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Incluye jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Incluye Moment.js -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- Incluye daterangepicker -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!-- Script para inicializar el componente de rango de fechas -->
+<script type="text/javascript">
+$(function() {
+    $('#fecha').daterangepicker({
+        locale: {
+            format: 'DD/MM/YYYY'
+        },
+        startDate: '01/09/2024',
+        endDate: '30/09/2024',
+        opens: 'right'
+    });
+});
+</script>
+{% endblock %}

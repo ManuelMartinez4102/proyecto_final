@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<!-- Contenedor para el botón de regreso al home alineado a la derecha -->
+<div class="d-flex justify-content-end mb-4" style="margin-top: -20px;">
+    <a href="{% url 'home' %}" class="btn btn-primary" style="border-radius: 20px; color: white;">Regresar al Home</a>
+</div>
+
+<main class="form-signin w-100 m-auto">
+  <form action="" method="post">
+    {% csrf_token %}
+    <img class="mb-4" src="{% static 'core/images/logo1.png' %}" alt="" width="200" height="120">
+    <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
+
+    <div class="mb-3">
+      <label for="email" class="form-label float-md-start">Email</label>
+      <input type="email" class="form-control" name="txtCorreo" id="email" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label float-md-start">Contraseña</label>
+      <input type="password" class="form-control" name="txtPassword" id="password" required>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button>
+
+    {% if messages %}
+        <div class="mt-3">
+            <ul class="list-unstyled">
+                {% for message in messages %}
+                    <li class="text-danger">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+  </form>
+</main>
+{% endblock %}

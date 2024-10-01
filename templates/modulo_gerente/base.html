@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gerente{% endblock %}</title>
+    <!-- Include CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'modulo_gerente/css/style_base.css' %}">
+    <link rel="stylesheet" href="{% static 'modulo_gerente/css/dashboard_gerente.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Barra Superior (usando código 2) -->
+            <div class="col-12 d-flex justify-content-between align-items-center" id="top-bar">
+                <!-- Contenedor de la información del usuario a la izquierda -->
+                <div class="user-info d-flex align-items-center">
+                    <img src="https://via.placeholder.com/50" class="rounded-circle" alt="Avatar" id="user-avatar"/>
+                    <div class="ml-3">
+                        <h5 class="user-name">Manuel Martinez</h5>
+                        <p class="user-role">Gerente de Ventas</p>
+                    </div>
+                </div>
+
+                <!-- Contenedor del logo centrado -->
+                <div class="logo-container d-flex justify-content-center">
+                    <img src="{% static 'images/Logo.png' %}" alt="Logo" id="logo-img" class="mr-4"/>
+                </div>
+
+                <!-- Botón "Back Home" a la derecha -->
+                <a href="{% url 'home' %}" class="btn btn-light d-flex align-items-center">
+                    <i class="fas fa-home mr-2"></i> Back Home
+                </a>
+            </div>
+
+            <!-- Barra Lateral (usando código 1) -->
+            <div class="col-md-2 bg-success text-white" id="sidebar">
+                <!-- Espacio en la parte superior para separar el contenido -->
+                <div class="mt-4"></div>
+
+                <!-- Menú de Navegación del Gerente-->
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'modulo_gerente:dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'modulo_gerente:metas' %}">Metas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'modulo_gerente:descansos' %}">Descansos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'modulo_gerente:datos_agentes' %}">Datos Agentes</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="container">
+                            <label for="dateRange">Fecha</label>
+                            <input type="text" id="dateRange" class="form-control" style="width: 200px;" />
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Agentes</a>
+                        <select class="form-control">
+                            <option>Agente 1</option>
+                            <option>Agente 2</option>
+                            <option>Agente 3</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contenido Principal -->
+            <div class="col-md-10" id="main-content" style="padding: 0; margin: 0;">
+                <div class="content-wrapper">
+                    {% block content %}
+                    <!-- Aquí se cargará el contenido dinámico de cada página -->
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inicializar el selector de rango de fechas -->
+    <script type="text/javascript">
+        $(function() {
+            // Inicializar el selector de rango de fechas con las fechas de contexto
+            $('#dateRange').daterangepicker({
+                opens: 'left',
+                startDate: moment("{{ start_date }}", "DD/MM/YYYY"),
+                endDate: moment("{{ end_date }}", "DD/MM/YYYY"),
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: 'Aplicar',
+                    cancelLabel: 'Cancelar',
+                    daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    monthNames: [
+                        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                    ]
+                }
+            });
+
+            // Evento para actualizar la URL con las fechas seleccionadas cuando se apliquen los cambios
+            $('#dateRange').on('apply.daterangepicker', function(ev, picker) {
+                // Redirigir con las fechas seleccionadas
+                window.location.href = `?start_date=${picker.startDate.format('DD/MM/YYYY')}&end_date=${picker.endDate.format('DD/MM/YYYY')}`;
+            });
+        });
+    </script>
+
+    {% block scripts %}
+    <!-- Sección adicional para cargar scripts específicos de cada plantilla -->
+    {% endblock %}
+</body>
+</html>

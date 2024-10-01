@@ -1,0 +1,75 @@
+{% extends 'modulo_gerente/base.html' %}
+
+{% block title %}Descansos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="text-center">
+        <h1>Descanso</h1>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <div class="p-5 bg-light rounded shadow-sm" style="width: 600px;">
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Campo de Vendedor con opciones de personas -->
+                <div class="mb-4">
+                    <label for="vendedor" class="form-label">Vendedor</label>
+                    <select class="form-control" id="vendedor" name="vendedor">
+                        <option value="" data-id="">Selecciona un vendedor</option>
+                        <option value="Carlos Pérez" data-id="CP001">Carlos Pérez</option>
+                        <option value="Ana López" data-id="AL002">Ana López</option>
+                        <option value="Luis Hernández" data-id="LH003">Luis Hernández</option>
+                        <option value="Marta García" data-id="MG004">Marta García</option>
+                    </select>
+                </div>
+
+                <!-- Campo de ID Colaborador (Se llena automáticamente) -->
+                <div class="mb-4">
+                    <label for="colaborador" class="form-label">Id colaborador</label>
+                    <input type="text" class="form-control" id="colaborador" name="colaborador" placeholder="ID se generará automáticamente" readonly>
+                </div>
+
+                <!-- Campo de Día con selector de calendario -->
+                <div class="mb-4">
+                    <label for="dia" class="form-label">Día</label>
+                    <input type="text" class="form-control" id="dia" name="dia" placeholder="Selecciona un día">
+                </div>
+
+                <!-- Botón de Guardar -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Incluye jQuery para el calendario -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Incluye la biblioteca de jQuery UI para el calendario -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<!-- Script para inicializar el componente de calendario en el campo "Día" y vincular ID automático -->
+<script type="text/javascript">
+$(function() {
+    // Inicializar el selector de calendario para el campo de "Día"
+    $('#dia').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true
+    });
+
+    // Cambiar el campo de ID colaborador automáticamente según el vendedor seleccionado
+    $('#vendedor').on('change', function() {
+        // Obtener el ID del colaborador desde la opción seleccionada
+        var selectedId = $(this).find(':selected').data('id');
+        // Asignar el valor al campo de ID colaborador
+        $('#colaborador').val(selectedId);
+    });
+});
+</script>
+{% endblock %}

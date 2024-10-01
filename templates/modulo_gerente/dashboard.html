@@ -1,0 +1,381 @@
+{% extends 'modulo_gerente/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+    <!-- Contenedor principal para las gráficas de KPIs -->
+    <div class="row kpi-row">
+        <!-- Contenedores de KPIs con datos -->
+        <div class="col-md-3 kpi-card" id="kpi-ventas-totales">
+            <h5>Ventas Totales</h5>
+            <h2>$ {{ total_ventas|floatformat:2|intcomma }}</h2>
+        </div>
+        <div class="col-md-3 kpi-card" id="kpi-numero-ventas">
+            <h5>Número de Ventas</h5>
+            <h2>{{ numero_ventas|intcomma }}</h2>
+        </div>
+        <div class="col-md-3 kpi-card" id="kpi-ganancias">
+            <h5>Ganancias</h5>
+            <h2>$ {{ ganancias|floatformat:2|intcomma }}</h2>
+        </div>
+        <div class="col-md-3" id="gaugeChart-container">
+            <h5>% de Metas Cumplidas</h5>
+            <canvas id="gaugeChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Nueva fila para la gráfica de barras -->
+    <div class="container-fluid mt-4">
+        <div class="row mt-4">
+            <!-- Gráfica de Barras: Top Ventas por Agente -->
+            <div class="col-md-6">
+                <div class="card" id="barChart-container">
+                    <div class="card-body">
+                        <h5 class="card-title">Top Ventas por Agente</h5>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfica de Línea: Tendencias de Ventas por Hora -->
+            <div class="col-md-6">
+                <div class="card" id="lineChart-container">
+                    <div class="card-body">
+                        <h5 class="card-title">Tendencias de Ventas por Hora</h5>
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nueva fila para las gráficas y la tabla en la misma fila -->
+    <div class="row mt-4">
+        <!-- Gráfica de Barras Horizontales -->
+        <div class="col-md-4">  <!-- Cambiar a col-md-4 para ocupar 1/3 del espacio -->
+            <div class="card" id="rectChart-container">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Ventas por Agente</h5>
+                    <canvas id="rectChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfica de Pastel -->
+        <div class="col-md-4">  <!-- Cambiar a col-md-4 para ocupar 1/3 del espacio -->
+            <div class="card" id="pieChart-container">
+                <div class="card-body">
+                    <h5 class="card-title">Categorías de Productos Vendidos</h5>
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de Resumen de Ventas -->
+        <div class="col-md-4">  <!-- Cambiar a col-md-4 para ocupar 1/3 del espacio -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Resumen de Ventas</h5>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Clave Usuario</th>
+                                <th>Nombre</th>
+                                <th>Producto</th>
+                                <th>Cantidad Vendida</th>
+                                <th>Costo</th>
+                                <th>Precio Público</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-table-body">
+                            {% for venta in resumen_ventas %}
+                            <tr class="sales-row {% if forloop.counter > 3 %}d-none{% endif %}">  <!-- Solo mostrar las primeras 3 filas -->
+                                <td>{{ venta.id_usuario__id_usuario }}</td>
+                                <td>{{ venta.id_usuario__nombre }}</td>
+                                <td>{{ venta.id_producto__nombre }}</td>
+                                <td>{{ venta.unidades_vendidas }}</td>
+                                <td>{{ venta.id_producto__costo }}</td>
+                                <td>{{ venta.id_producto__precio_publico }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <button id="show-more-btn" class="btn btn-primary">Mostrar más</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_head %}
+<!-- Cargar el archivo CSS personalizado -->
+<link rel="stylesheet" href="{% static 'modulo_gerente/dashboard.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Script para la Gráfica de Gauge -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const metasTotales = {{ total_metas|default:0 }};
+        const metasCumplidas = {{ metas_cumplidas|default:0 }};
+        const datosMetas = metasTotales > 0 ? [metasCumplidas, metasTotales - metasCumplidas] : [0, 1];
+
+        const ctxGauge = document.getElementById('gaugeChart').getContext('2d');
+        const gaugeChart = new Chart(ctxGauge, {
+            type: 'doughnut',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: datosMetas,
+                    backgroundColor: ['#4caf50', '#e0e0e0'],
+                    borderWidth: 2,
+                    cutout: '70%'
+                }]
+            },
+            options: {
+                responsive: true,
+                rotation: -90,
+                circumference: 180,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' Metas';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<!-- Script para la Gráfica de Barras -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const nombresAgentes = {{ nombres_agentes|safe }};  // Lista de nombres de agentes (X-axis)
+        const montosVentas = {{ montos_ventas|safe }};  // Lista de montos de ventas (Y-axis)
+        const montosVentasFloat = montosVentas.map(Number);
+
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: nombresAgentes,
+                datasets: [{
+                    label: '',  // Quitar la etiqueta de Monto de Ventas
+                    data: montosVentasFloat,
+                    backgroundColor: '#5A7546',
+                    borderColor: '#5A7546',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Agentes'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Monto de Ventas ($)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false  // Ocultar la leyenda
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const horas = {{ horas|safe }};  // Lista de horas en el eje X
+        const ventasPorHora = {{ ventas_por_hora|safe }};  // Cantidad de ventas en el eje Y
+
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        const lineChart = new Chart(ctxLine, {
+            type: 'line',  // Tipo de gráfico de línea
+            data: {
+                labels: horas,  // Colocar horas en el eje X
+                datasets: [{
+                    label: 'Ventas por Hora',
+                    data: ventasPorHora,  // Ventas en el eje Y
+                    backgroundColor: 'rgba(90, 117, 70, 0.3)',  // Color de relleno
+                    borderColor: '#5A7546',  // Color de la línea
+                    borderWidth: 2,
+                    fill: true,  // Rellenar debajo de la línea
+                    tension: 0.4  // Curvatura de la línea para suavizarla
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Horas del Día'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Cantidad de Ventas'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Ventas: ' + context.raw;  // Formatear el tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Datos para el gráfico de rectángulos
+        const nombresAgentes = {{ nombres_agentes_2|safe }};  // Lista de nombres de agentes (Y-axis)
+        const montosVentas = {{ montos_ventas_2|safe }};  // Lista de montos de ventas (X-axis)
+
+        // Crear colores dinámicos para cada rectángulo
+        const backgroundColors = nombresAgentes.map((_, index) => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`);
+
+        const ctxRect = document.getElementById('rectChart').getContext('2d');
+        const rectChart = new Chart(ctxRect, {
+            type: 'bar',  // Usar un gráfico de barras
+            data: {
+                labels: nombresAgentes,  // Colocar nombres de agentes en el eje Y
+                datasets: [{
+                    label: 'Total de Ventas',
+                    data: montosVentas,  // Ventas totales en el eje X
+                    backgroundColor: 'rgba(90, 117, 70, 0.3)',  // Color de relleno
+                    borderColor: '#5A7546',  // Color de la línea
+
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',  // Cambiar las barras a horizontales
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total de Ventas'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Agentes'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw.toLocaleString();  // Mostrar el total de ventas con formato
+                            }
+                        }
+                    },
+                    legend: {
+                        display: false  // Ocultar la leyenda de la gráfica
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Datos para el gráfico de pastel
+        const categorias = {{ nombres_categorias|safe }};  // Nombres de categorías
+        const cantidades = {{ cantidades_vendidas|safe }};  // Cantidades vendidas por categoría
+
+        // Configuración del gráfico de pastel
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        const pieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: categorias,
+                datasets: [{
+                    data: cantidades,
+                    backgroundColor: ['rgba(90, 117, 70, 0.6)', '#4caf50', '#ffb74d', '#ff5252', '#9575cd'],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.raw + ' productos vendidos';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const showMoreButton = document.getElementById('show-more-btn');
+        let showingAll = false;
+
+        showMoreButton.addEventListener('click', function() {
+            const rows = document.querySelectorAll('.sales-row');
+            rows.forEach((row, index) => {
+                // Mostrar u ocultar filas dependiendo de si ya se están mostrando todas
+                if (index >= 3) {
+                    row.classList.toggle('d-none');
+                }
+            });
+
+            // Cambiar el texto del botón según la acción
+            showingAll = !showingAll;
+            showMoreButton.textContent = showingAll ? 'Mostrar menos' : 'Mostrar más';
+        });
+    });
+</script>
+
+
+
+{% endblock %}

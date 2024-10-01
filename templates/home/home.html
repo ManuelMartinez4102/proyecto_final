@@ -1,0 +1,19 @@
+{% extends 'home/base.html' %}
+{% block content %}
+  <main class="px-3">
+    <h1>ARAGB</h1>
+
+    {% if request.user.is_authenticated %}
+      <p class="lead">Bienvenido {{ user.username | upper }}, bienvenido a Aravis. ¿Qué deseas hacer hoy?</p>
+    {% else %}
+      <p class="lead">Esta es una plataforma web para el análisis del rendimiento de una boutique de artesanías.</p>
+      <p class="lead">
+        <a href="{% url 'login' %}" class="btn btn-lg btn-dark fw-bold">Iniciar Sesión</a>
+      </p>
+    {% endif %}
+
+    <p class="lead">
+
+    </p>
+  </main>
+{% endblock %}
