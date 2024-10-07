@@ -34,6 +34,7 @@ SECRET_KEY = "django-insecure-68#1^8rgm3)hg9z91czt(f)%f1xinl3j#$^4@eynsqniob2scd
 DEBUG = True
 
 ALLOWED_HOSTS = []
+LOGIN_URL = '/login/'
 
 
 # Application definition
@@ -49,7 +50,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "modulo_gerente",
     "modulo_agente",
-    "modulo_login",
 ]
 
 MIDDLEWARE = [
@@ -60,7 +60,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+
+   # 'proyecto_aragb.middleware.LoginRequiredMiddleware',
+
 ]
+
 
 ROOT_URLCONF = "proyecto_aragb.urls"
 
@@ -125,6 +130,7 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)

@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo del cuerpo y HTML para ocupar todo el alto de la pantalla y usar una fuente sans-serif */
+body, html {
+  height: 100%;
+  font-family: Inter; /* Asegúrate de que la fuente esté disponible */
+}
+
+/* Fondo que cubre toda la pantalla, centrado y ajustado con la imagen local */
+.background {
+  background-image: url('/static/images/login_fondo.jpg'); /* Asegúrate de que esta ruta sea correcta */
+  background-size: cover; /* Hace que la imagen cubra toda el área */
+  background-position: center; /* Centra la imagen */
+  height: 100vh; /* Ocupa el 100% de la altura de la pantalla */
+  display: flex; /* Usado para centrar la tarjeta */
+  justify-content: center; /* Centra la tarjeta horizontalmente */
+  align-items: center; /* Centra la tarjeta verticalmente */
+}
+
+/* Estilo para la tarjeta blanca en el centro */
+.card {
+  background-color: white; /* Color de fondo blanco */
+  padding: 40px; /* Espacio interno */
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra sutil debajo de la tarjeta */
+  transition: transform 0.3s ease-in-out; /* Suaviza las transformaciones como el hover */
+
+  /* Personaliza el tamaño de la tarjeta aquí */
+  width: 400px; /* Ancho de la tarjeta */
+  height: 400px; /* Alto de la tarjeta */
+}
+
+/* Efecto hover: hace que la tarjeta suba y se agrande al poner el cursor encima */
+.card:hover {
+  transform: translateY(-10px) scale(1.1); /* La eleva 10px y la agranda un 10% */
+}
+
+/* Título dentro de la tarjeta */
+.card h1 {
+  font-size: 2.5rem; /* Tamaño más grande para el título ARAGB */
+  color: #5b4646; /* Color del texto */
+  text-align: center; /* Centra el texto */
+  margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Estilo del botón para Iniciar Sesión */
+.btn-submit {
+  display: inline-block; /* Hace que el botón se comporte como un bloque */
+  background-color: #90C06B; /* Cambiado a color verde deseado */
+  color: white; /* Texto en blanco */
+  padding: 10px 20px; /* Relleno para hacer el botón más grande */
+  font-size: 1.2rem; /* Tamaño del texto en el botón */
+  border-radius: 20px; /* Bordes redondeados */
+  text-align: center; /* Alinea el texto al centro */
+  text-decoration: none; /* Elimina el subrayado */
+  margin-top: 20px; /* Espacio encima del botón */
+  transition: background-color 0.3s ease; /* Suaviza el cambio de color del botón */
+  width: 100%; /* Hace que el botón ocupe todo el ancho */
+}
+
+/* Efecto hover para el botón: cambia de tono de verde cuando se coloca el cursor encima */
+.btn-submit:hover {
+  background-color: #7DAE5C; /* Color verde más oscuro cuando se pasa el cursor */
+}
+
+/* Estilo para el contenedor del botón "Home" */
+.btn-container {
+  position: absolute; /* Asegúrate de que esté en posición absoluta */
+  top: 20px; /* Ajusta la distancia desde la parte superior */
+  right: 20px; /* Ajusta la distancia desde el lado derecho, puedes cambiar a 20px para más cercanía */
+  z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+/* Estilo del botón Home */
+.btn-light {
+  display: flex; /* Para usar flexbox y alinear elementos */
+  align-items: center; /* Alinear verticalmente el ícono y el texto */
+  border-radius: 10px; /* Bordes redondeados */
+  color: #000; /* Color del texto */
+  padding: 10px 20px; /* Relleno para el botón */
+  background-color: white; /* Fondo blanco */
+  text-decoration: none; /* Sin subrayado */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: background-color 0.3s ease; /* Suaviza el cambio de color */
+}
+
+.btn-light i {
+  margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+/* Efecto hover para el botón Home */
+.btn-light:hover {
+  background-color: #f0f0f0; /* Color gris claro al pasar el cursor */
+  color: #007bff; /* Color del texto en el hover */
+}

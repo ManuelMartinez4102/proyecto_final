@@ -1,55 +1,44 @@
 {% extends 'modulo_gerente/base.html' %}
 
-{% block title %}Gestión de Metas{% endblock %}
+{% block title %}Metas{% endblock %}
 
 {% block content %}
-
-<div class="container mt-4">
-    <div class="header text-center bg-white text-dark p-3 rounded shadow-sm">
-        <h1>Gestión de Metas</h1>
+<div class="container-fluid" style="width: 95%;">
+    <!-- Sección del título y botón alineados -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+        <h2 class="text-center w-100">Metas</h2>
+        <button class="btn btn-success" style="position: absolute; right: 0;">Agregar</button>
     </div>
 
-    <div class="row mt-4">
-
-        <div class="col-md-8">
-
-            <div class="form-container p-4 bg-light rounded shadow-sm">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="fecha" class="form-label">Fecha</label>
-                        <input type="text" class="form-control" id="fecha" name="fecha" value="01/09/2024 - 30/09/2024">
-                    </div>
-                    <div class="mb-3">
-                        <label for="monto" class="form-label">Monto</label>
-                        <input type="number" class="form-control" id="monto" name="monto" placeholder="Monto en pesos">
-                    </div>
-                    <button type="submit" class="btn btn-success">Guardar Meta</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <!-- Tabla -->
+    <table class="table table-bordered mt-4" style="width: 100%; font-size: 1.2em; table-layout: fixed;">
+        <thead>
+            <tr>
+                <th style="width: 20%;">Fecha</th>
+                <th style="width: 20%;">Monto Meta</th>
+                <th style="width: 40%;">Usuarios</th>
+                <th style="width: 20%;">Meta Cumplida</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% regroup metas by fecha_final_meta as grouped_metas %}
+            {% for group in grouped_metas %}
+                <tr>
+                    <td>{{ group.grouper }}</td>
+                    <td>{{ group.list.0.monto_meta }}</td>
+                    <td>
+                        {% for meta in group.list %}
+                            {{ meta.id_usuario.nombre }} {{ meta.id_usuario.apellidos }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for meta in group.list %}
+                            {{ meta.meta_cumplida|yesno:"Sí,No" }}{% if not forloop.last %}<br>{% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<!-- Incluye jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Incluye Moment.js -->
-<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<!-- Incluye daterangepicker -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-<!-- Script para inicializar el componente de rango de fechas -->
-<script type="text/javascript">
-$(function() {
-    $('#fecha').daterangepicker({
-        locale: {
-            format: 'DD/MM/YYYY'
-        },
-        startDate: '01/09/2024',
-        endDate: '30/09/2024',
-        opens: 'right'
-    });
-});
-</script>
 {% endblock %}

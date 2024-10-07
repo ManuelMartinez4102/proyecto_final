@@ -1,0 +1,64 @@
+/* Estilos generales: eliminan márgenes y hacen que el padding y los bordes se ajusten correctamente */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo del cuerpo y HTML para ocupar todo el alto de la pantalla y usar una fuente sans-serif */
+body, html {
+  height: 100%;
+  font-family: Inter;
+}
+
+/* Fondo que cubre toda la pantalla, centrado y ajustado con la imagen local */
+.background {
+  background-image: url('/static/images/home.jpg'); /* Ruta relativa para la imagen local */
+  background-size: cover; /* Hace que la imagen cubra toda el área */
+  background-position: center; /* Centra la imagen */
+  height: 100vh; /* Ocupa el 100% de la altura de la pantalla */
+  display: flex; /* Usado para centrar la tarjeta */
+  justify-content: center; /* Centra la tarjeta horizontalmente */
+  align-items: center; /* Centra la tarjeta verticalmente */
+}
+
+/* Estilo para la tarjeta blanca en el centro */
+.card {
+  background-color: white; /* Color de fondo blanco */
+  padding: 80px; /* Más padding para hacer la tarjeta más grande */
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra sutil debajo de la tarjeta */
+  transition: transform 0.3s ease-in-out; /* Suaviza las transformaciones como el hover */
+}
+
+/* Efecto hover: hace que la tarjeta suba y se agrande al poner el cursor encima */
+.card:hover {
+  transform: translateY(-10px) scale(1.1); /* La eleva 10px y la agranda un 10% */
+}
+
+/* Título dentro de la tarjeta */
+.card h1 {
+  font-size: 2.5rem; /* Tamaño más grande para el título ARAGB */
+  color: #5b4646; /* Color del texto */
+  text-align: center; /* Centra el texto */
+  margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Estilo del botón para Iniciar Sesión */
+.card a {
+  display: inline-block; /* Hace que el botón se comporte como un bloque */
+  background-color: #90C06B; /* Cambiado a color verde deseado */
+  color: white; /* Texto en blanco */
+  padding: 10px 20px; /* Relleno para hacer el botón más grande */
+  font-size: 1.2rem; /* Tamaño del texto en el botón */
+  border-radius: 20px; /* Bordes redondeados (cambia de 5px a 20px) */
+  text-align: center; /* Alinea el texto al centro */
+  text-decoration: none; /* Elimina el subrayado */
+  margin-top: 20px; /* Espacio encima del botón */
+  transition: background-color 0.3s ease; /* Suaviza el cambio de color del botón */
+}
+
+/* Efecto hover para el botón: cambia de tono de verde cuando se coloca el cursor encima */
+.card a:hover {
+  background-color: #7DAE5C; /* Color verde más oscuro cuando se pasa el cursor */
+}

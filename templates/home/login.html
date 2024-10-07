@@ -1,39 +1,88 @@
-{% extends 'home/base.html' %}
+<!doctype html>
+<html lang="es" class="h-100">
 
 {% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Agregar Font Awesome -->
 
-{% block content %}
-<!-- Contenedor para el botón de regreso al home alineado a la derecha -->
-<div class="d-flex justify-content-end mb-4" style="margin-top: -20px;">
-    <a href="{% url 'home' %}" class="btn btn-primary" style="border-radius: 20px; color: white;">Regresar al Home</a>
+  <link href="{% static 'core/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'core/css/custom.css' %}" rel="stylesheet"> <!-- Estilo personalizado -->
+  <link rel="stylesheet" href="{% static 'home/login.css' %}"> <!-- Carga del archivo CSS estático -->
+  <title>Inicio de sesión</title>
+
+  <script>
+    // Función para alternar la visibilidad de la contraseña
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      const toggleButton = document.getElementById('togglePassword');
+
+      // Cambia el tipo de input y el texto del botón
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        toggleButton.textContent = 'Ocultar'; // Cambiar texto a "Ocultar"
+      } else {
+        passwordField.type = 'password';
+        toggleButton.textContent = 'Mostrar'; // Cambiar texto a "Mostrar"
+      }
+    }
+  </script>
+</head>
+
+<body class="background"> <!-- Clase para aplicar el fondo -->
+
+  <div class="d-flex align-items-center justify-content-center h-100 position-relative"> <!-- Flexbox para centrar y posición relativa -->
+  </div>
+
+<!-- Botón "Home" alineado a la derecha -->
+
+
+  <div class="card"> <!-- Tarjeta blanca centrada -->
+    <h1>ARAGB</h1>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <input type="email" class="form-control" name="txtEmail" id="email" placeholder="Correo" required>
+      </div>
+      <div class="mb-3 position-relative"> <!-- Agregar posición relativa -->
+        <input type="password" class="form-control" name="txtPassword" id="password" placeholder="Contraseña" required>
+        <button type="button" class="btn position-absolute" id="togglePassword" onclick="togglePasswordVisibility()" style="right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none;">
+          Mostrar <!-- Texto por defecto -->
+        </button>
+      </div>
+
+      <button class="btn btn-submit" type="submit">Iniciar sesión</button> <!-- Botón con estilo personalizado -->
+
+      {% if messages %}
+        <div class="mt-3">
+          <ul class="list-unstyled">
+            {% for message in messages %}
+              <li class="text-danger">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </form>
+
+  </div>
 </div>
 
-<main class="form-signin w-100 m-auto">
-  <form action="" method="post">
-    {% csrf_token %}
-    <img class="mb-4" src="{% static 'core/images/logo1.png' %}" alt="" width="200" height="120">
-    <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
 
-    <div class="mb-3">
-      <label for="email" class="form-label float-md-start">Email</label>
-      <input type="email" class="form-control" name="txtCorreo" id="email" required>
-    </div>
-    <div class="mb-3">
-      <label for="password" class="form-label float-md-start">Contraseña</label>
-      <input type="password" class="form-control" name="txtPassword" id="password" required>
-    </div>
+<!-- Botón "Home" alineado a la derecha -->
+<div class="btn-container">
+  <a href="{% url 'home' %}" class="btn btn-light d-flex align-items-center">
+    <i class="fas fa-home mr-2"></i> Back Home
+  </a>
+</div>
 
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar Sesión</button>
 
-    {% if messages %}
-        <div class="mt-3">
-            <ul class="list-unstyled">
-                {% for message in messages %}
-                    <li class="text-danger">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-  </form>
-</main>
-{% endblock %}
+{% if request.user.is_authenticated %}
+  <div class="text-center mt-4">
+    <a class="btn btn-outline-light" href="{% url 'exit' %}">Cerrar Sesión</a>
+  </div>
+{% endif %}
+
+</body>
+</html>

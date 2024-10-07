@@ -2,15 +2,20 @@ from django.shortcuts import render
 from datetime import datetime
 from django.views.generic import TemplateView
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-# Define DashboardView como clase basada en plantilla
-class DashboardView(TemplateView):
+
+# Define DashboardView como clase basada en plantilla con protección de login
+class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'modulo_agente/dashboard.html'
+    login_url = '/login/'  # Opcional: URL de redirección si no está autenticado
 
 
-# FormularioView - Si no existe, agrega una vista genérica
-class FormularioView(TemplateView):
+# FormularioView con protección de login
+class FormularioView(LoginRequiredMixin, TemplateView):
     template_name = 'modulo_agente/formulario.html'
+    login_url = '/login/'  # Opcional: URL de redirección si no está autenticado
 
 
 # Función para analizar la fecha
@@ -20,7 +25,9 @@ def parse_date(date_str):
     except (ValueError, TypeError):
         return None
 
-# Vista para el dashboard del Agente
+
+# Vista para el dashboard del Agente con protección de login
+@login_required(login_url='/login/')
 def agente_dashboard(request):
     # Obtener las fechas de los parámetros de la URL
     start_date = parse_date(request.GET.get('start_date'))

@@ -129,7 +129,7 @@ from django.db import models
 class MetasCumplidas(models.Model):
     id_total = models.AutoField(primary_key=True)
     id_meta = models.IntegerField()
-    id_usuario = models.IntegerField()
+    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, db_column='id_usuario')  # Relación con Usuario
     monto_meta = models.DecimalField(max_digits=10, decimal_places=2)
     monto_total = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_final_meta = models.DateField()

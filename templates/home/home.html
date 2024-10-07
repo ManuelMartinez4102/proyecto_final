@@ -1,19 +1,22 @@
-{% extends 'home/base.html' %}
-{% block content %}
-  <main class="px-3">
-    <h1>ARAGB</h1>
-
-    {% if request.user.is_authenticated %}
-      <p class="lead">Bienvenido {{ user.username | upper }}, bienvenido a Aravis. ¿Qué deseas hacer hoy?</p>
-    {% else %}
-      <p class="lead">Esta es una plataforma web para el análisis del rendimiento de una boutique de artesanías.</p>
-      <p class="lead">
-        <a href="{% url 'login' %}" class="btn btn-lg btn-dark fw-bold">Iniciar Sesión</a>
-      </p>
-    {% endif %}
-
-    <p class="lead">
-
-    </p>
-  </main>
-{% endblock %}
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARAGB</title>
+  <!-- Carga del archivo CSS estático -->
+  <link rel="stylesheet" href="{% static 'home/home.css' %}">
+</head>
+<body>
+  <!-- Fondo de pantalla con la imagen de fondo -->
+  <div class="background">
+    <!-- Tarjeta blanca en el centro -->
+    <div class="card">
+      <h1>ARAGB</h1>
+      <!-- Botón de Iniciar Sesión debajo del texto ARAGB -->
+      <a href="{% url 'login' %}" class="btn btn-lg btn-dark fw-bold">Iniciar sesión</a>
+    </div>
+  </div>
+</body>
+</html>

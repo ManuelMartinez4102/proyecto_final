@@ -4,13 +4,24 @@ from django.views.generic import TemplateView
 from .utils import calcular_ventas_totales, calcular_numero_ventas, calcular_ganancias, calcular_porcentaje_metas_cumplidas, calcular_top_ventas, calcular_ventas_por_hora
 from .utils import calcular_total_ventas_agente, calcular_top_categorias, calcular_resumen_ventas
 
+
 # Define DashboardView como clase basada en plantilla
+
 class DashboardView(TemplateView):
     template_name = 'modulo_gerente/dashboard.html'
+from .models import MetasCumplidas
+
+
 
 # MetasView - si no existe, agrega una vista genérica como esta
 class MetasView(TemplateView):
     template_name = 'modulo_gerente/metas.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['metas'] = MetasCumplidas.objects.select_related('id_usuario').all()
+        return context
+
 
 # DescansosView - si no existe, agrega una vista genérica
 class DescansosView(TemplateView):
